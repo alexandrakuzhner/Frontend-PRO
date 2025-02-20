@@ -74,3 +74,87 @@ let coffee1 = new Product("Tschibo", "dnkvjnk kjvnkjfvk kdjvkjsvk", 8, 50)
 coffee1.changePrice(10)
 coffee1.sale()
 console.log(coffee1);
+
+
+class Person {
+    static roles = ["student", "lecturer", "employer"]
+
+    constructor(firstname, lastname, age = 18) {
+        this.firstname = firstname
+        this.lastname = lastname
+        this.age = age
+    }
+
+    setRole(role) {
+        if(Person.roles.includes(role)) {
+            this.role = role
+            return
+        }
+        throw new Error("Недопустимая роль")
+    }
+
+    incrementAge() {
+        this.age++
+    }
+}
+
+let person1 = new Person("John", "Doe", 25)
+// person1.setRole("student")
+console.log(Person.roles);
+console.log(person1);
+
+
+
+class Person1 {
+    static roles = ["student", "lecturer", "employer"]
+    static createdPerson = []
+
+    #card = "0000000 465"
+
+    constructor(firstname, lastname, age = 18, balance) {
+        this.firstname = firstname
+        this.lastname = lastname
+        this.age = age
+        this.balance = balance
+
+        Person.createdPerson.push(this)
+    }
+
+    get card() {
+        return this.#card
+    } //read
+
+    set card(value) {
+        this.#card = value
+    } //to make changes
+
+    static getTotalBalance() {
+        return Person.createdPerson.reduce((acc, user) => acc + user.balance, 0)
+        
+    }
+
+    setRole(role) {
+        if(Person.roles.includes(role)) {
+            this.role = role
+            return
+        }
+        throw new Error("Недопустимая роль")
+    }
+
+    incrementAge() {
+        this.age++
+    }
+
+}
+
+let person1 = new Person("John", "Doe", 25, 100)
+person1.setRole("student")
+console.log(Person.roles);
+console.log(person1);
+
+let person2 = new Person("Jane", "Doe", 25, 123)
+let person3 = new Person("Jane", "Doe", 25, 124)
+let person4 = new Person("Jane", "Doe", 25, 50)
+
+let totalBalance = Person.getTotalBalance()
+console.log(totalBalance);
