@@ -15,24 +15,22 @@ class Car {
 
 class Person {
     static roles = ["student", "lecturer", "employer"]
-    static createdPersons = [] //
-    // let this = {
-    //   card: "0000000 465"
-    // }
+    static createdPersons = [] 
     #card = ""
   
-    constructor(firstname, lastname, age = 18, balance, cardData) {
+    constructor(firstname, lastname, age = 18, balance, cardData, email) {
       this.firstname = firstname
       this.lastname = lastname
       this.age = age
       this.balance = balance
       this.#card = cardData
+      this.email = email
   
-      Person.createdPersons.push(this) //
+      Person.createdPersons.push(this) 
     }
   
     get card() {
-      // "08080808 464 1234" = ["08080808", "464", "1234"]
+      
       return this.#card.split(" ")[0]
     }
   
@@ -40,7 +38,7 @@ class Person {
       this.#card = value
     }
   
-    static getTotalBalance() { //
+    static getTotalBalance() { 
       return Person.createdPersons.reduce((acc, user) => acc + user.balance, 0)
     }
   
@@ -55,30 +53,42 @@ class Person {
     incrementAge() {
       this.age++
     }
-  }
 
-  class Person1 extends Person {
-    constructor(firstname, lastname, age = 18, balance, cardData) {
-        super(firstname, lastname, age = 18, balance, cardData)
+    change_email(newEmail) {
+      if(Person.createdPersons.find(el => el.email === "@", ".")) {
+        Person.createdPersons.push(newEmail)
+      }
+      throw new Error(`Задан неверный формат email. Попробуйте еще раз`)
     }
   }
 
+
+
+
 //3
 class Library {
+
     static books = [];
 
 
     static addBook(book) {
-        const book = {title, author}
         Library.books.push(book)
     }
 
     static listBooks() {
-        Library.books.forEach(book => console.log(`${book.title}, ${book.author}`));
-        )
+        Library.books.forEach(book => console.log(`Название: ${book.title}, Автор: ${book.author}`));
         
     }
 }
+
+const book1 = { title: "451 градус по Фаренгейту", author: "Рей Брэдбери" };
+const book2 = { title: "1984", author: "Джордж Оруэлл" };
+
+Library.addBook(book1);
+Library.addBook(book2);
+
+Library.listBooks()
+
 
 //4
 
@@ -111,4 +121,35 @@ class Rectangle {
     area() {
         return this.#width * this.#height;
     }
+}
+
+// 5
+
+class BankAccount {
+  static accounts = [];
+  #balance = 0
+
+  deposit(sum){
+    return this.#balance += sum
+
+  }
+  
+  withdrawal(sum){
+    if(sum > this.#balance){
+      return this.#balance -=sum
+    }
+    throw new Error("На Вашем счету недостаточно средств")
+
+  }
+
+  get currentBalance() {
+    return this.#balance
+  }
+
+  totalBalance(){
+    return BankAccount.accounts.reduce((acc, curr) => acc + curr, 0)
+    
+  }
+
+
 }
