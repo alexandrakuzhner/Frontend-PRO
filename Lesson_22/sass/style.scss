@@ -1,0 +1,15 @@
+$color_1: red;
+$color_2: blue;
+$textPosition: ; 
+
+
+.post {
+    &_title {
+    color: $color_1;
+    }
+    
+    &_content {
+    color: $color_2;
+    text-align: ;
+    }
+}
