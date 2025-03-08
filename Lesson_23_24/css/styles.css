@@ -1,0 +1,76 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: #1A2432;
+  color: #E0E0E0;
+  font-family: Roboto;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 32px;
+}
+header .logo {
+  font-size: 24px;
+  font-weight: bold;
+  cursor: pointer;
+}
+header .cart-icon {
+  position: relative;
+  cursor: pointer;
+}
+header .cart-icon .cart-count {
+  position: absolute;
+  top: -10px;
+  right: -8px;
+  background-color: #3A86FF;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  font-size: 9px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+header .nav-links nav ul {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  list-style: none;
+  gap: 24px;
+}
+header .nav-links nav ul .nav-link {
+  cursor: pointer;
+  position: relative;
+  font-size: 20px;
+  padding-bottom: 10px;
+}
+header .nav-links nav ul .nav-link.active::after {
+  position: absolute;
+  bottom: 0;
+  content: "";
+  left: 0;
+  background-color: #E0E0E0;
+  width: 100%;
+  height: 2px;
+}
+
+.search-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px 0;
+}
+.search-container .search-box {
+  border-radius: 25px;
+  width: 600px;
+  padding: 12px 24px;
+}
+
+/*# sourceMappingURL=styles.css.map */
