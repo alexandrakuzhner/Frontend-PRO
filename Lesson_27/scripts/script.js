@@ -90,13 +90,17 @@ function renderProducts() {
       return product.title.toLowerCase().includes(searchValue)
     }
   }).forEach(product => {
+    const existInCart = cart.find(p => p.id === product.id)
     productsContainer.insertAdjacentHTML("beforeend", `
     <div class="product-card">
       <div class="product-image-container">
         <img src="${product.thumbnail}" alt="product"
           class="product-image">
         <div class="product-category">${product.category}</div>
-        <div class="product-select" data-productid="${product.id}">+</div>
+        ${existInCart ?
+        `<div class="product-select exist" data-productid="${product.id}">✓</div>` :
+        `<div class="product-select" data-productid="${product.id}">+</div>`
+      }
       </div>
       <div class="product-info">
         <p class="product-title">${product.title}</p>
@@ -119,8 +123,61 @@ function renderProducts() {
 // если продукт есть проверить если он уже есть в корзине то удалить оттуда
 // если продукта нет в корзине, то создать объект с такими свойствами {id, title, image, price, count} и добавить в массив cart
 // products = [{id: 1, ...}, {id: 2, ...}] 
+
 function addToCart(productId) {
-  // ...
+  let product = products.find(p => p.id === productId)
+  if (!product) {
+  return
+  }
+  
+  let productInCart = cart.find(p => p.id === productId)
+  if (productInCart) {
+  cart = cart.filter(p => p.id !== productId)
+  } else {
+  cart.push({
+  id: product.id,
+  title: product.title,
+  image: product.thumbnail,
+  price: product.price,
+  count: 1
+  })
+  }
+  
+  cartProductsCount.innerText = cart.length
+  renderProducts()
+  renderCartProducts()
+}
+
+const cartIcon = document.querySelector(".cart-icon")
+const closeCart = document.querySelector(".close-cart")
+cartIcon.addEventListener('click', toggleCart);
+closeCart.addEventListener('click', toggleCart)
+function toggleCart() {
+  cartSidebar.classList.toggle('open');
+}
+
+const cartProducts = document.querySelector(".cart-items")
+function renderCartProducts() {
+  cartProducts.innerHTML = ""
+  cart.forEach(product => {
+    cartProducts.insertAdjacentHTML("beforeend",
+    `<div class="cart-item">
+       <img src="${product.image}"
+       alt="${product.title}" class="cart-item-image">
+       <div class="cart-item-details">
+           <div class="cart-item-title">${product.title}</div>
+           <div class="cart-item-price">$${product.price}</div>
+           <div class="cart-item-actions">
+               <button class="quantity-btn decrease-quantity" data-id="${product.id}">-</button>
+               <span class="item-quantity">${product.count}</span>
+               <button class="quantity-btn increase-quantity" data-id="${product.id}">+</button>
+               <button class="remove-item" data-id="${product.id}">×</button>
+            </div>
+       </div>
+    </div>`
+
+)
+})
 }
 
 getCategories()
