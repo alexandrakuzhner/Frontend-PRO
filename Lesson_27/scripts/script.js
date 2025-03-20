@@ -148,8 +148,9 @@ function addToCart(productId) {
   renderCartProducts()
 }
 
-const cartIcon = document.querySelector(".cart-icon")
-const closeCart = document.querySelector(".close-cart")
+const cartIcon = document.querySelector(".cart-icon");
+const closeCart = document.querySelector(".close-cart");
+const cartSidebar = document.querySelector("#cartSidebar");
 cartIcon.addEventListener('click', toggleCart);
 closeCart.addEventListener('click', toggleCart)
 function toggleCart() {
@@ -159,6 +160,8 @@ function toggleCart() {
 const cartProducts = document.querySelector(".cart-items")
 function renderCartProducts() {
   cartProducts.innerHTML = ""
+  cartProductsCount.innerText = cart.length
+  
   cart.forEach(product => {
     cartProducts.insertAdjacentHTML("beforeend",
     `<div class="cart-item">
@@ -178,6 +181,61 @@ function renderCartProducts() {
 
 )
 })
+if (cart.length === 0) {
+  cartProducts.innerHTML = `<div class="empty-cart">Your cart is empty</div>`
+}
+const plusBtns = document.querySelectorAll(".increase-quantity")
+plusBtns.forEach(btn => {
+btn.addEventListener("click", function () {
+console.log(this.dataset.id)
+updateCount(+this.dataset.id, 1)
+})
+})
+
+const decBtns = document.querySelectorAll(".decrease-quantity")
+decBtns.forEach(btn => {
+btn.addEventListener("click", function () {
+console.log(this.dataset.id)
+updateCount(+this.dataset.id, -1)
+  })
+})
+const removeProducts = document.querySelectorAll(".remove-item");
+removeProducts.forEach(rmElem => {
+  rmElem.addEventListener("click", function() {
+    cart = cart.filter(p => p.id !== +this.dataset.id)
+    renderCartProducts()
+    renderProducts()
+  })
+})
+
+
+
+const cartTotal = document.querySelector("#cartTotal")
+cartTotal.innerText = `$${cart.reduce((acc, p) => acc + (p.price + p.count), 0).toFixed(2)}`
+
+
+
+}
+
+
+
+// Создать функцию updateCount(productId, count) которая ищет продукт в корзине(cart). Если продукта нет то вернуть пустой return.
+// Если продукт есть то просто изменить свойство count
+// Если в итоге count будет <= 0 то удалить продукт из корзины а после вызвать renderCartProducts
+// Если count больше 0 то просто вызвать функцию renderCartProducts
+
+function updateCount(productId, count) {
+  const product = cart.find(p => p.id === productId)
+  if(!product) {
+    return
+  }
+
+  product.count += count
+  if (product.count <= 0) {
+    cart = cart.filter(p => p.id !== productId)
+  }
+  renderCartProducts()
+  renderProducts()
 }
 
 getCategories()
