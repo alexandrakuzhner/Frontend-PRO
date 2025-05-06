@@ -13,3 +13,7 @@
 .profile-card>.media>img {
   width: 300px;
 }
+
+.title {
+  color: green;
+}

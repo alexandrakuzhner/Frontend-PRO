@@ -1,0 +1,20 @@
+import { useContext } from "react"
+import { FlashCardsContext } from "../context/FlashCardsProvider"
+
+export default function FlashCard({ id, question, answer, isDone }) {
+  const { toggleIsDone } = useContext(FlashCardsContext)
+  return (
+    <div onClick={() => {
+      toggleIsDone(id)
+    }} className={`flash-card ${isDone ? "active" : ""}`} key={id}>
+      <div className="inner-card">
+        <div className="front">
+          <h2>{question}</h2>
+        </div>
+        <div className="back">
+          <h2>{answer}</h2>
+        </div>
+      </div>
+    </div>
+  )
+}
